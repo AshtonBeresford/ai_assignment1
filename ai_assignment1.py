@@ -23,6 +23,8 @@ rows = len(maze)
 cols = len(maze[0])
 
 # Possible moves: right, down, left, up
+# Preference of the order of movement: right, down, left, up
+    # However because the code utilizes a stack it is handled in the opposite order which means: up, left, down, right
 moves = [(0, 1), (1, 0), (0, -1), (-1, 0)]
 
 def is_valid(position, visited):
@@ -51,22 +53,26 @@ def dfs(start, goal):
     while stack:
         current = stack.pop()
 
+        # upon reaching the goal, returns the path it used to get there
         if current == goal:
             return reconstruct_path(parent, start, goal)
 
+        # marks any newly visited points as having been visited
         if current not in visited:
             visited.add(current)
 
+            # goes through the possible moves
             for move in moves:
                 next_pos = (current[0] + move[0], current[1] + move[1])
 
+                # if selected move is valid then it will continue onto the next point
                 if is_valid(next_pos, visited):
                     stack.append(next_pos)
                     parent[next_pos] = current
 
     return None
 
-
+#after finding the goal this function returns the path it took to get there
 def reconstruct_path(parent, start, goal):
     path = []
     current = goal
