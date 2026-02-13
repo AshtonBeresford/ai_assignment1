@@ -85,7 +85,7 @@ def reconstruct_path(parent, start, goal):
     path.reverse()
     return path
 
-
+# runs code
 path = dfs(start, goal)
 
 if path:
